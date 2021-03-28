@@ -1,0 +1,190 @@
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+////////// TRATAR DE SIEMPRE LEER LOS COMENTARIOS //////////
+////////// Aún no está completo, pero se está     //////////
+////////// terminando, ver en dado caso, video    //////////
+////////// de Código Facilito con Canvas          //////////
+////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////
+
+var canva = document.querySelector(`canvas`);
+var ctx = canva.getContext(`2d`);
+
+var keyboard = {}
+var spaceship = new Image();
+spaceship.src = 'images/spaceship.png'
+var ship = {
+    // x: ctx.canvas.width - 20,
+    // y: ctx.canvas.height - 70,
+    x: ctx.canvas.width - 20,
+    y: ctx.canvas.height - 80,
+    width: 20,
+    height: 20
+};
+
+var hud = {
+    //Cantidad de segundos transcurridos
+    counter_s: 0,
+    //Cantidad de helio del tanque (esta en %)
+    counter_h: 100,
+    //Suma de puntos * globos reventados
+    counter_p: 0
+}
+
+var controls = {
+    gameInit: false
+}
+
+const btnStart = document.querySelector(`#btn-start`);
+
+btnStart.onclick = function () {
+    //Evalua si el juego ha comenzado
+    if (controls.gameInit == false) {
+        function Cargar() {
+            document.querySelector(`.power`).classList.add('power-on');
+            ctx.canvas.classList.add('background-canvas');
+            var intervalo = window.setInterval(frameloop, 1000 / 55);
+        }
+        //Cargan los elementos del juego
+        Cargar();
+        drawShip();
+        timer();
+        setInterval(timer, 1000);
+
+        this.value = "Restart";
+        controls.gameInit = true
+    }
+    else {
+        //Reinicia el juego
+        location.reload();
+    }
+};
+
+function helioTank() {
+
+    //Muestra la cantidad de helio de la nave en el canvas
+    ctx.save();
+    ctx.fillStyle = "#aaa";
+    ctx.fillRect(0, 0, 175, 15);
+    ctx.fillStyle = "#000";
+    ctx.font = "bold 10px Comic Sans MS"
+    ctx.fillText(`Helio: ${hud.counter_h}%`, 2, 11);
+    ctx.fillStyle = "red";
+    ctx.fillRect(70, 4, hud.counter_h, 7);
+    ctx.restore();
+
+}
+
+function score() {
+
+    //Muestra los puntos de helio obtenidos en el canvas
+    ctx.save();
+    ctx.fillStyle = "#aaa";
+    ctx.fillRect(0, 15, 110, 15);
+    ctx.fillStyle = "#000";
+    ctx.font = "bold 10px Comic Sans MS";
+    ctx.fillText(`H-Points: ${hud.counter_p} / 500`, 2, 26);
+    ctx.restore();
+
+    //Comentario, cada que se sumen puntos
+    //tan solo cambia el valor de hud.counter_p, 
+    //y para la cantidad de helio de la nave es hud.counter_h
+    //que hay un intervalo que actualiza el valor en pantalla.
+
+}
+
+var x_0 = 240;
+
+function timer() {
+
+    //Muestra el tiempo transcurrido en el canvas
+
+    let x_1 = canva.width - 90;
+    ctx.save();
+    ctx.fillStyle = "#aaa";
+    ctx.fillRect(x_1, 0, 90, 15);
+    ctx.fillStyle = "#000";
+    ctx.arc(x_1, 7.25, 7, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(x_1, 7.5);
+    ctx.lineTo(x_1, 3);
+    ctx.moveTo(x_1, 8);
+    ctx.lineTo(x_1, 2);
+    ctx.strokeStyle = "#fff";
+    ctx.stroke();
+    ctx.font = "bold 10px Comic Sans MS";
+    if (hud.counter_s == 100) x_0 -= 5;
+    if (hud.counter_s == 1000) x_0 -= 10;
+    ctx.fillText("Time: " + hud.counter_s++ + "s", x_0, 11);
+
+    //Comentario para Edgar, te recomiendo que pongas la función o el codigo que vayas
+    //a utilizar apartir de aqui, porque tu parte depende el timer.
+
+    //Te recomiendo tomar el valor de hud.counter_s que es la que guarda los segundos
+    //trancurridos en el juego y que para modificar el valor de el tanque de helio
+    //cambia el valor de hud.counter_h que es la cantidad de helio del tanque.
+    //Estos valores se actualizan en pantalla.
+
+    ctx.restore();
+
+}
+
+function drawShip() {
+    //Muestra la nave en el canvas
+    ctx.save();
+    ctx.drawImage(spaceship, ship.x, ship.y, ship.width, ship.height);
+    ctx.restore();
+}
+
+function KeyboardEvent() {
+    console.log("KeyBoardEventFunction");
+
+    addEvent(document, "keydown", function (e) {
+        //Key pulsada true
+        keyboard[e.keyCode] = true;
+    });
+
+    addEvent(document, "keyup", function (e) {
+        //Key pulsada false
+        keyboard[e.keyCode] = false;
+        // console.log("Disabled");
+    });
+    function addEvent(element, nameElement, eFunction) {
+        if (element.addEventListener) {
+            //General Browsers
+            element.addEventListener(nameElement, eFunction, false);
+        }
+        else if (element.attachEvent) {
+            //Explorer
+            element.attachEvent(nameElement, eFunction);
+        }
+    }
+}
+
+function moveShip() {
+    var limit = ctx.canvas.width;
+    if (keyboard[39]) {
+        console.log("MoveShipFunctionOn");
+        //up
+        ship.y -= 10;
+        console.log(ship.y + "Nave up");
+        console.log(limit);
+        if (ship.y == 10) { ship.y = 200 };
+    }
+    if (keyboard[37]) {
+        //down
+        ship.y += 10;
+        if (ship.y > limit) { ship.y = 0 };
+    }
+}
+
+function frameloop() {
+    //Encargada de llamar a todas las funciones que componen el juego
+    moveShip();
+    drawShip();
+    helioTank();
+    score();
+}
+
+KeyboardEvent();
