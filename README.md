@@ -20,3 +20,14 @@ Ares Liza White Méndez 2017-5515
 ```python
 VIDEO JUEGO CREADO POR EL GRUPO 6 DE PROGRAMACION III 
 ```
+## EVIDENCIA DE COMUNICACION 
+
+```bash
+GRUPO DE TELEGRAM 
+GRUPO DE COMUNICACION VIA DISCORD 
+```
+![image](https://user-images.githubusercontent.com/58122638/113236796-9abe7700-9273-11eb-820a-fdd7ac3eff90.png)
+
+![image](https://user-images.githubusercontent.com/58122638/113236984-fc7ee100-9273-11eb-9b8c-260bdfcf2a99.png)
+
+
