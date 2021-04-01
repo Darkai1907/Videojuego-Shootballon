@@ -15,7 +15,7 @@ Objetivos del Juego:
 -- Edgar
 9. Si la cantidad de helio llega a cero, la nave explota y termina el juego con Game Over. 
 10. Los globos azules aumentan la cantidad de helio en 10 puntos, los demás la aumentan en 1 punto. 
--- Mike
+-- Michael
 11. El láser de la nave sólo dispara en línea recta. 
 12. Cuando la nave logre un total de 500 puntos en la cantidad de helio, se pasa al siguiente nivel. 
 -- Ares Liza 
